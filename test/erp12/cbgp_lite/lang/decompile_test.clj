@@ -836,16 +836,6 @@
          '({:gene :lit, :type {:type string?}, :val "Hello"} {:gene :var, :name first-str} {:gene :apply})))
   (is (= (de/decompile-ast (ana.jvm/analyze '(last "String")))
          '({:gene :lit, :type {:type string?}, :val "String"} {:gene :var, :name last-str} {:gene :apply})))
-<<<<<<< HEAD
-
-=======
-  
-   (is (= (de/decompile-ast (ana.jvm/analyze '(count "Hamilton")))
-         '({:gene :lit, :type {:type string?}, :val "Hamilton"} 
-           {:gene :var, :name length} 
-           {:gene :apply})))
-  
->>>>>>> sydney/llmgp/hacking
   (is (= (de/decompile-ast (ana.jvm/analyze '(count [1 2 3 4])))
          '({:gene :lit,
             :type {:child {:type int?}, :type :vector}, :val [1 2 3 4]}
