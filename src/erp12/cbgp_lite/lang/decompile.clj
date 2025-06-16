@@ -4,7 +4,8 @@
             [erp12.cbgp-lite.lang.compile :as co]
             [erp12.cbgp-lite.lang.lib :as lib]
             [erp12.cbgp-lite.search.plushy :as pl]
-            [erp12.cbgp-lite.task :as tsk]))
+            [erp12.cbgp-lite.task :as tsk]
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; Compilation testing
@@ -110,7 +111,10 @@
                 {:gene :var
                  :name `lib/min'}
                 {:gene :apply}]]
+<<<<<<< HEAD
         
+=======
+>>>>>>> owen/llmgp/hacking
     (compile-debugging2 genome
                         task
                         [5 6 -33 9]
@@ -272,6 +276,7 @@
             :default '->vector1}
    ; TO-DO: add check for vec->set and map->set
    'hash-set {1 '->set1
+<<<<<<< HEAD
               2 '->set2
               3 '->set3
               :default '->set1}
@@ -280,6 +285,16 @@
               4 '->map2
               6 '->map3
               :default '->map1}
+=======
+         2 '->set2
+         3 '->set3
+         :default '->set1}
+   ; TO-DO: add check for vec->map and set->map
+   'hash-map {2 '->map1
+         4 '->map2
+         6 '->map3
+         :default '->map1}
+>>>>>>> owen/llmgp/hacking
    'range {1 'range1
            2 'range2
            3 'range3
@@ -300,7 +315,13 @@
   (cond
     (and (map? map-or-vec)
          (= (:op map-or-vec) :local))
+<<<<<<< HEAD
     map-or-vec
+=======
+    (do 
+      ;; (println "local found! type whatever: " (:tag map-or-vec) (:form map-or-vec))
+      map-or-vec)
+>>>>>>> owen/llmgp/hacking
 
     (map? map-or-vec)
     (first (filter #(not (nil? %))
@@ -318,6 +339,7 @@
 (defn get-fn-symbol
   "Finds the CBGP function name for this ast-fn-name"
   [ast-fn-name tag args task]
+  ;; (println "Firstp Task: " task ast-fn-name)
   (cond
     ;; Because of the phrasing, this needs to be hard coded
     (= ast-fn-name 'intCast)
@@ -392,8 +414,33 @@
                               "-set"
                               (map? (:val (first args)))
                               "-map"
+<<<<<<< HEAD
                               :else
                               "-vec"))]
+=======
+                              (vector? (:val (first args)))
+                              "-vec"
+                              :else
+                              (cond
+                                (= 'string?
+                                   (:type (get (:input->type task)
+                                               (:form (find-local args)))))
+                                "-str"
+                                (= :set
+                                   (:type (get (:input->type task)
+                                               (:form (find-local args)))))
+                                "-set"
+                                (= :map
+                                   (:type (get (:input->type task)
+                                               (:form (find-local args)))))
+                                "-map"
+                                (= :vector
+                                   (:type (get (:input->type task)
+                                               (:form (find-local args)))))
+                                "-vec"
+                                :else
+                                "-BAD")))]
+>>>>>>> owen/llmgp/hacking
               ;; I didn't want to do this but CBGP naming 
               ;; "conventions" forced my hand
               (if (= symb "count-str")
@@ -464,6 +511,7 @@
   "Decompiles AST into a CBGP genome."
   ([ast] (decompile-ast ast {}))
   ([{:keys [op val tag args children] :as ast} task]
+  ;;  (println "Decomp Task: " task)
    (cond
     ;; Handle constants
      (= :const op)
@@ -482,7 +530,7 @@
      (let [ast-fn-name (if (= op :static-call)
                          (:method ast)
                          (-> ast :fn :form))
-           raw-decompiled-args (map decompile-ast args)
+           raw-decompiled-args (map #(decompile-ast % task) args )
            decompiled-args (flatten (reverse raw-decompiled-args))]
        (concat decompiled-args
                (list {:gene :var :name (get-fn-symbol ast-fn-name tag args task)}
@@ -503,7 +551,7 @@
     ;; Handle if
      (= op :if)
      (let [ast-fn-name 'if
-           raw-decompiled-args (map decompile-ast (map ast children))
+           raw-decompiled-args (map #(decompile-ast % task) (map ast children))
            decompiled-args (flatten (reverse raw-decompiled-args))]
        (concat decompiled-args
                (list {:gene :var :name (get-fn-symbol ast-fn-name tag args task)}
@@ -521,7 +569,7 @@
                         :methods
                         first
                         :body)
-                    task)
+                    task) 
 
      :else
      (do
@@ -574,6 +622,7 @@
   (decompile-ast
    (ana.jvm/analyze '(map inc '(1 2 3))))
 
+<<<<<<< HEAD
   (decompile-ast
    (ana.jvm/analyze '(map inc (conj [1 2 3] 8))))
 
@@ -613,5 +662,12 @@
   (compile-debugging (decompile-ast (ana.jvm/analyze '(< 4 5)))
                      {:type 'boolean?})
 
+=======
+  (decompile-ast (ana.jvm/analyze '(map inc [1 2 3])))
+
+  (ana.jvm/analyze '(hash-map "a" 1))
+
+  (ana.jvm/analyze 'count) 
+>>>>>>> owen/llmgp/hacking
   )
 

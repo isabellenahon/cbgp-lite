@@ -1,6 +1,6 @@
 {:path     ["src"]
  :deps     {com.taoensso/timbre              {:mvn/version "6.0.4"}
-            io.github.erp12/schema-inference {:git/sha "9c52bef1a8235f11071f6ed8a44fa6d492a4949e"}
+            io.github.erp12/schema-inference {:local/root "../schema-inference"}
             clj-fuzzy/clj-fuzzy              {:mvn/version "0.4.1"}
             org.clojure/tools.analyzer.jvm {:mvn/version "1.3.2"}}
  :jvm-opts ["-XX:CompressedClassSpaceSize=2g"]
@@ -10,5 +10,4 @@
                          :exec-fn     mb.hawk.core/find-and-run-tests-cli}
             :benchmarks {:extra-paths ["benchmarks"]
                          :extra-deps  {org.clojure/tools.cli    {:mvn/version "1.0.206"}
-                                       net.clojars.schneau/psb2 {:mvn/version "1.1.1"}
-                                       io.github.erp12/ga-clj   {:git/sha "a6ef20b104875369a4266bd7fd4ff6cc0e7fa786"}}}}}
+                                       net.clojars.schneau/psb2 {:mvn/version "1.1.1"} io.github.erp12/ga-clj   {:git/sha "a6ef20b104875369a4266bd7fd4ff6cc0e7fa786"}}}}}

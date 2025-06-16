@@ -841,7 +841,7 @@
          '({:gene :lit, :type {:type string?}, :val "Hamilton"}
            {:gene :var, :name length}
            {:gene :apply})))
-
+  
   (is (= (de/decompile-ast (ana.jvm/analyze '(count [1 2 3 4])))
          '({:gene :lit,
             :type {:child {:type int?}, :type :vector}, :val [1 2 3 4]}
