@@ -111,10 +111,6 @@
                 {:gene :var
                  :name `lib/min'}
                 {:gene :apply}]]
-<<<<<<< HEAD
-        
-=======
->>>>>>> owen/llmgp/hacking
     (compile-debugging2 genome
                         task
                         [5 6 -33 9]
@@ -276,16 +272,6 @@
             :default '->vector1}
    ; TO-DO: add check for vec->set and map->set
    'hash-set {1 '->set1
-<<<<<<< HEAD
-              2 '->set2
-              3 '->set3
-              :default '->set1}
-   ; TO-DO: add check for vec->map and set->map
-   'hash-map {2 '->map1
-              4 '->map2
-              6 '->map3
-              :default '->map1}
-=======
          2 '->set2
          3 '->set3
          :default '->set1}
@@ -294,7 +280,6 @@
          4 '->map2
          6 '->map3
          :default '->map1}
->>>>>>> owen/llmgp/hacking
    'range {1 'range1
            2 'range2
            3 'range3
@@ -315,13 +300,7 @@
   (cond
     (and (map? map-or-vec)
          (= (:op map-or-vec) :local))
-<<<<<<< HEAD
     map-or-vec
-=======
-    (do 
-      ;; (println "local found! type whatever: " (:tag map-or-vec) (:form map-or-vec))
-      map-or-vec)
->>>>>>> owen/llmgp/hacking
 
     (map? map-or-vec)
     (first (filter #(not (nil? %))
@@ -414,10 +393,6 @@
                               "-set"
                               (map? (:val (first args)))
                               "-map"
-<<<<<<< HEAD
-                              :else
-                              "-vec"))]
-=======
                               (vector? (:val (first args)))
                               "-vec"
                               :else
@@ -440,7 +415,6 @@
                                 "-vec"
                                 :else
                                 "-BAD")))]
->>>>>>> owen/llmgp/hacking
               ;; I didn't want to do this but CBGP naming 
               ;; "conventions" forced my hand
               (if (= symb "count-str")
@@ -622,52 +596,9 @@
   (decompile-ast
    (ana.jvm/analyze '(map inc '(1 2 3))))
 
-<<<<<<< HEAD
-  (decompile-ast
-   (ana.jvm/analyze '(map inc (conj [1 2 3] 8))))
-
-  ;; these are working for now, but maybe only because of vec default
-
-  (compile-debugging
-   (decompile-ast
-    (ana.jvm/analyze '(map inc [1 2 3])))
-   (lib/vector-of lib/INT))
-
-  (compile-debugging
-   (decompile-ast
-    (ana.jvm/analyze '(map inc (conj [1 2 3] 8))))
-   (lib/vector-of lib/INT))
-
-  ;; not working
-
-  (ana.jvm/analyze '(map count ["sad" "wwwwww" ""]))
-
-  (decompile-ast
-   (ana.jvm/analyze '(map count ["sad" "wwwwww" ""])))
-
-  (ana.jvm/analyze '(map count (map str [1 2 3])))
-
-  (decompile-ast
-   (ana.jvm/analyze '(map count (map str [1 2 3]))))
-
-  (compile-debugging
-   (decompile-ast
-    (ana.jvm/analyze '(map count ["sad" "wwwwww" ""])))
-   (lib/vector-of lib/INT))
-
-  (conj #{4 5} 7)
-
-  (decompile-ast (ana.jvm/analyze '(< 4 5)))
-
-  (compile-debugging (decompile-ast (ana.jvm/analyze '(< 4 5)))
-                     {:type 'boolean?})
-
-=======
   (decompile-ast (ana.jvm/analyze '(map inc [1 2 3])))
 
   (ana.jvm/analyze '(hash-map "a" 1))
 
   (ana.jvm/analyze 'count) 
->>>>>>> owen/llmgp/hacking
-  )
-
+)
